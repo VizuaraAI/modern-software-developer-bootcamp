@@ -1,0 +1,1511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Modern Software Developer | 5-Day Bootcamp by Vizuara</title>
+    <meta name="description" content="Master AI-powered software development in 5 intensive days. 12 hands-on projects. Learn Claude Code, MCP, Agentic Development, Secure Vibe Coding, and more.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        mono: ['JetBrains Mono', 'monospace'],
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        claude: {
+                            orange: '#E8825C',
+                            'orange-light': '#F4A583',
+                            'orange-dark': '#C96A45',
+                            bg: '#0A0A0A',
+                            'bg-light': '#111111',
+                            'bg-card': '#161616',
+                            'bg-card-hover': '#1C1C1C',
+                            border: '#2A2A2A',
+                            'border-light': '#333333',
+                            text: '#E5E5E5',
+                            'text-muted': '#888888',
+                            'text-dim': '#555555',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- AOS Animate on Scroll -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #0A0A0A;
+            color: #E5E5E5;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Terminal cursor blink */
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .cursor-blink {
+            animation: blink 1s infinite;
+        }
+
+        /* Typing animation */
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        .typing-text {
+            overflow: hidden;
+            white-space: nowrap;
+            animation: typing 2s steps(40) forwards;
+        }
+
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(135deg, #E8825C 0%, #F4A583 50%, #E8825C 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Glow effect */
+        .glow-orange {
+            box-shadow: 0 0 20px rgba(232, 130, 92, 0.3), 0 0 60px rgba(232, 130, 92, 0.1);
+        }
+
+        .glow-orange-hover:hover {
+            box-shadow: 0 0 30px rgba(232, 130, 92, 0.4), 0 0 80px rgba(232, 130, 92, 0.15);
+        }
+
+        /* Terminal window styling */
+        .terminal-window {
+            background: #161616;
+            border: 1px solid #2A2A2A;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+
+        .terminal-header {
+            background: #1C1C1C;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            border-bottom: 1px solid #2A2A2A;
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0A0A0A;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        /* FAQ accordion */
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+            padding-top: 16px;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: rgba(232, 130, 92, 0.3);
+            border-radius: 50%;
+            animation: float-particle linear infinite;
+        }
+
+        @keyframes float-particle {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100px) rotate(720deg); opacity: 0; }
+        }
+
+        /* Grid background */
+        .grid-bg {
+            background-image:
+                linear-gradient(rgba(232, 130, 92, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(232, 130, 92, 0.03) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        /* Day card hover */
+        .day-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .day-card:hover {
+            border-color: #E8825C;
+            transform: translateY(-2px);
+        }
+
+        .day-card .day-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .day-card.expanded .day-content {
+            max-height: 2000px;
+        }
+
+        .day-card .expand-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .day-card.expanded .expand-icon {
+            transform: rotate(180deg);
+        }
+
+        /* Project card hover */
+        .project-card {
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            border-color: rgba(232, 130, 92, 0.5);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(232, 130, 92, 0.1);
+        }
+
+        /* Stat counter animation */
+        @keyframes countUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Nav active link */
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #E8825C;
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        /* Radial gradient hero */
+        .hero-gradient {
+            background: radial-gradient(ellipse at 50% 0%, rgba(232, 130, 92, 0.12) 0%, transparent 60%);
+        }
+
+        /* Line decoration */
+        .line-decoration {
+            position: relative;
+        }
+
+        .line-decoration::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(to bottom, #E8825C, transparent);
+            border-radius: 3px;
+        }
+
+        /* Pulse ring for CTA */
+        @keyframes pulse-ring {
+            0% { transform: scale(1); opacity: 0.5; }
+            100% { transform: scale(1.3); opacity: 0; }
+        }
+
+        .pulse-ring::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: inherit;
+            border: 2px solid #E8825C;
+            animation: pulse-ring 2s ease-out infinite;
+        }
+
+        /* Smooth reveal for stats */
+        .stat-item {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .stat-item.revealed {
+            opacity: 1;
+            transform: translateY(0);
+            transition: all 0.6s ease;
+        }
+
+        /* Mobile nav */
+        .mobile-nav {
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+        }
+
+        .mobile-nav.open {
+            transform: translateX(0);
+        }
+    </style>
+</head>
+<body class="grid-bg">
+    <!-- Floating Particles Background -->
+    <div id="particles" class="fixed inset-0 pointer-events-none z-0"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 left-0 right-0 z-50 transition-all duration-300" style="background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid transparent;">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex items-center gap-3">
+                    <div class="flex items-center gap-2">
+                        <img src="assets/vizlogo.png" alt="Vizuara" class="h-7 w-auto" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="hidden items-center gap-2">
+                            <div class="w-8 h-8 rounded-lg bg-claude-orange flex items-center justify-center">
+                                <span class="font-mono font-bold text-white text-sm">&gt;_</span>
+                            </div>
+                            <span class="font-mono font-semibold text-claude-text text-sm">vizuara</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Desktop Nav -->
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#why" class="nav-link font-mono text-sm text-claude-text-muted hover:text-claude-text">Why Now</a>
+                    <a href="#syllabus" class="nav-link font-mono text-sm text-claude-text-muted hover:text-claude-text">Syllabus</a>
+                    <a href="#projects" class="nav-link font-mono text-sm text-claude-text-muted hover:text-claude-text">Projects</a>
+                    <a href="#instructor" class="nav-link font-mono text-sm text-claude-text-muted hover:text-claude-text">Instructor</a>
+                    <a href="#pricing" class="nav-link font-mono text-sm text-claude-text-muted hover:text-claude-text">Pricing</a>
+                    <a href="#faq" class="nav-link font-mono text-sm text-claude-text-muted hover:text-claude-text">FAQ</a>
+                    <a href="https://vizuara.ai/courses/course_20006260" target="_blank" class="relative pulse-ring ml-2 px-5 py-2 bg-claude-orange hover:bg-claude-orange-dark text-white font-mono text-sm font-semibold rounded-lg transition-all duration-300">
+                        Enroll Now
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <button id="mobile-menu-btn" class="md:hidden text-claude-text-muted hover:text-claude-text">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Mobile Nav Overlay -->
+    <div id="mobile-nav" class="mobile-nav fixed inset-0 z-50 bg-claude-bg/95 backdrop-blur-xl md:hidden">
+        <div class="flex flex-col items-center justify-center h-full gap-8">
+            <button id="mobile-close-btn" class="absolute top-5 right-5 text-claude-text-muted hover:text-claude-text">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                </svg>
+            </button>
+            <a href="#why" class="mobile-nav-link font-mono text-xl text-claude-text-muted hover:text-claude-orange transition-colors">Why Now</a>
+            <a href="#syllabus" class="mobile-nav-link font-mono text-xl text-claude-text-muted hover:text-claude-orange transition-colors">Syllabus</a>
+            <a href="#projects" class="mobile-nav-link font-mono text-xl text-claude-text-muted hover:text-claude-orange transition-colors">Projects</a>
+            <a href="#instructor" class="mobile-nav-link font-mono text-xl text-claude-text-muted hover:text-claude-orange transition-colors">Instructor</a>
+            <a href="#pricing" class="mobile-nav-link font-mono text-xl text-claude-text-muted hover:text-claude-orange transition-colors">Pricing</a>
+            <a href="#faq" class="mobile-nav-link font-mono text-xl text-claude-text-muted hover:text-claude-orange transition-colors">FAQ</a>
+            <a href="https://vizuara.ai/courses/course_20006260" target="_blank" class="mt-4 px-8 py-3 bg-claude-orange hover:bg-claude-orange-dark text-white font-mono text-lg font-semibold rounded-lg transition-all">
+                Enroll Now
+            </a>
+        </div>
+    </div>
+
+    <!-- ===== HERO SECTION ===== -->
+    <section class="relative min-h-screen flex items-center justify-center hero-gradient pt-16">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center py-20">
+            <!-- Terminal badge -->
+            <div data-aos="fade-down" data-aos-delay="100" class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-claude-border bg-claude-bg-card mb-8">
+                <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                <span class="font-mono text-xs text-claude-text-muted">March 23 &ndash; 27, 2026 &bull; Live &bull; Online</span>
+            </div>
+
+            <!-- Main Title -->
+            <h1 data-aos="fade-up" data-aos-delay="200" class="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight mb-6">
+                <span class="text-claude-text">The Modern</span><br>
+                <span class="gradient-text">Software Developer</span>
+            </h1>
+
+            <!-- Terminal subtitle -->
+            <div data-aos="fade-up" data-aos-delay="400" class="inline-block mb-8">
+                <div class="terminal-window max-w-2xl mx-auto">
+                    <div class="terminal-header">
+                        <div class="terminal-dot bg-red-500"></div>
+                        <div class="terminal-dot bg-yellow-500"></div>
+                        <div class="terminal-dot bg-green-500"></div>
+                        <span class="font-mono text-xs text-claude-text-dim ml-2">modern-dev-bootcamp</span>
+                    </div>
+                    <div class="p-5 text-left">
+                        <p class="font-mono text-sm text-claude-text-muted">
+                            <span class="text-claude-orange">$</span> <span class="text-green-400">echo</span> "5-Day Intensive Bootcamp"
+                        </p>
+                        <p class="font-mono text-sm text-claude-text mt-1">
+                            &gt; 12 hands-on projects &bull; AI-first development &bull; Ship real code
+                        </p>
+                        <p class="font-mono text-sm text-claude-text-muted mt-3">
+                            <span class="text-claude-orange">$</span> <span class="text-green-400">cat</span> mission.txt
+                        </p>
+                        <p class="font-mono text-sm text-claude-text mt-1">
+                            &gt; Master the tools, workflows, and mindset of the<br>
+                            &nbsp;&nbsp;AI-powered software engineer. <span class="cursor-blink text-claude-orange">|</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subtitle -->
+            <p data-aos="fade-up" data-aos-delay="500" class="text-lg sm:text-xl text-claude-text-muted max-w-2xl mx-auto mb-10 leading-relaxed">
+                The traditional software development lifecycle is being transformed by AI at every stage.
+                Learn to <span class="text-claude-text font-medium">10x your productivity</span> with cutting-edge AI-powered development tools and workflows.
+            </p>
+
+            <!-- CTA Buttons -->
+            <div data-aos="fade-up" data-aos-delay="600" class="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12">
+                <a href="https://vizuara.ai/courses/course_20006260" target="_blank" class="relative pulse-ring group px-8 py-4 bg-claude-orange hover:bg-claude-orange-dark text-white font-mono font-semibold rounded-xl transition-all duration-300 glow-orange glow-orange-hover text-lg">
+                    Enroll Now &mdash; &#8377;25,000
+                </a>
+                <a href="#syllabus" class="px-8 py-4 border border-claude-border hover:border-claude-orange text-claude-text font-mono font-medium rounded-xl transition-all duration-300">
+                    View Curriculum &darr;
+                </a>
+            </div>
+
+            <!-- Quick stats -->
+            <div data-aos="fade-up" data-aos-delay="700" class="flex flex-wrap items-center justify-center gap-8 sm:gap-12">
+                <div class="text-center">
+                    <div class="font-mono text-3xl font-bold text-claude-orange">5</div>
+                    <div class="font-mono text-xs text-claude-text-muted mt-1">Days</div>
+                </div>
+                <div class="w-px h-10 bg-claude-border"></div>
+                <div class="text-center">
+                    <div class="font-mono text-3xl font-bold text-claude-orange">12</div>
+                    <div class="font-mono text-xs text-claude-text-muted mt-1">Projects</div>
+                </div>
+                <div class="w-px h-10 bg-claude-border"></div>
+                <div class="text-center">
+                    <div class="font-mono text-3xl font-bold text-claude-orange">15+</div>
+                    <div class="font-mono text-xs text-claude-text-muted mt-1">Tools</div>
+                </div>
+                <div class="w-px h-10 bg-claude-border"></div>
+                <div class="text-center">
+                    <div class="font-mono text-3xl font-bold text-claude-orange">100%</div>
+                    <div class="font-mono text-xs text-claude-text-muted mt-1">Hands-on</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll indicator -->
+        <div class="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
+            <svg class="w-6 h-6 text-claude-text-dim" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"/>
+            </svg>
+        </div>
+    </section>
+
+    <!-- ===== WHY NOW SECTION ===== -->
+    <section id="why" class="relative py-24 sm:py-32">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section header -->
+            <div class="text-center mb-16">
+                <span data-aos="fade-up" class="inline-block font-mono text-sm text-claude-orange mb-4 tracking-widest uppercase">// The Urgency</span>
+                <h2 data-aos="fade-up" data-aos-delay="100" class="text-4xl sm:text-5xl font-bold text-claude-text mb-6">
+                    Why <span class="gradient-text">Now?</span>
+                </h2>
+            </div>
+
+            <!-- Radar chart card -->
+            <div data-aos="fade-up" data-aos-delay="200" class="terminal-window max-w-4xl mx-auto mb-16">
+                <div class="terminal-header">
+                    <div class="terminal-dot bg-red-500"></div>
+                    <div class="terminal-dot bg-yellow-500"></div>
+                    <div class="terminal-dot bg-green-500"></div>
+                    <span class="font-mono text-xs text-claude-text-dim ml-2">ai-impact-analysis.pdf</span>
+                </div>
+                <div class="p-6 sm:p-8">
+                    <div class="flex flex-col lg:flex-row items-center gap-8">
+                        <div class="lg:w-1/2">
+                            <img src="assets/ai-coverage-chart.jpeg" alt="Theoretical AI capability vs observed usage by occupation" class="rounded-lg w-full">
+                        </div>
+                        <div class="lg:w-1/2 space-y-6">
+                            <h3 class="text-2xl font-bold text-claude-text">
+                                The gap is closing. <span class="text-claude-orange">Fast.</span>
+                            </h3>
+                            <p class="text-claude-text-muted leading-relaxed">
+                                AI can theoretically automate <span class="text-claude-text font-semibold">~90% of software engineering tasks</span>.
+                                But most engineers are barely using a fraction of that capability.
+                            </p>
+                            <p class="text-claude-text-muted leading-relaxed">
+                                The <span class="text-claude-orange font-mono">blue area</span> shows what AI <em>can</em> do. The <span class="text-red-400 font-mono">red area</span> shows what engineers are <em>actually</em> using. When observed adoption catches up to theoretical capability &mdash; and it will &mdash; engineers who haven't adapted will be left behind.
+                            </p>
+                            <div class="terminal-window">
+                                <div class="p-4">
+                                    <p class="font-mono text-sm">
+                                        <span class="text-claude-orange">$</span> <span class="text-green-400">diff</span> traditional_dev modern_dev<br>
+                                        <span class="text-red-400">- Manual coding from scratch</span><br>
+                                        <span class="text-green-400">+ AI-assisted plan, generate, modify, verify</span><br>
+                                        <span class="text-red-400">- Hours of debugging</span><br>
+                                        <span class="text-green-400">+ AI-powered diagnostics in seconds</span><br>
+                                        <span class="text-red-400">- Manual testing & security review</span><br>
+                                        <span class="text-green-400">+ Automated AI testing & secure vibe coding</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stanford social proof -->
+            <div data-aos="fade-up" data-aos-delay="300" class="terminal-window max-w-4xl mx-auto">
+                <div class="terminal-header">
+                    <div class="terminal-dot bg-red-500"></div>
+                    <div class="terminal-dot bg-yellow-500"></div>
+                    <div class="terminal-dot bg-green-500"></div>
+                    <span class="font-mono text-xs text-claude-text-dim ml-2">stanford-validation.md</span>
+                </div>
+                <div class="p-6 sm:p-8">
+                    <div class="flex flex-col sm:flex-row items-center gap-6 sm:gap-8">
+                        <div class="sm:w-2/5">
+                            <img src="assets/stanford-screenshot.png" alt="Stanford CS146S: The Modern Software Developer" class="rounded-lg w-full border border-claude-border">
+                        </div>
+                        <div class="sm:w-3/5 space-y-4">
+                            <h3 class="text-2xl font-bold text-claude-text">
+                                Stanford saw this coming.
+                            </h3>
+                            <p class="text-claude-text-muted leading-relaxed">
+                                Stanford University launched <a href="https://themodernsoftware.dev/" target="_blank" class="text-claude-orange hover:underline font-mono">CS146S: The Modern Software Developer</a>
+                                in Fall 2025 &mdash; it <span class="text-claude-text font-semibold">filled up immediately</span>. The demand for AI-powered software engineering skills is real and urgent.
+                            </p>
+                            <p class="text-claude-text-muted leading-relaxed">
+                                This bootcamp brings that same vision &mdash; <span class="text-claude-text font-semibold">updated for 2026</span>, condensed into 5 intensive days, packed with 12 hands-on projects, and priced accessibly for engineers ready to upskill.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== WHO IS THIS FOR ===== -->
+    <section class="py-20 relative">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <span data-aos="fade-up" class="inline-block font-mono text-sm text-claude-orange mb-4 tracking-widest uppercase">// Target Audience</span>
+                <h2 data-aos="fade-up" data-aos-delay="100" class="text-3xl sm:text-4xl font-bold text-claude-text">
+                    Who is this for?
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div data-aos="fade-up" data-aos-delay="100" class="terminal-window p-6 text-center hover:border-claude-orange transition-all duration-300">
+                    <div class="text-4xl mb-4">&#128187;</div>
+                    <h3 class="font-mono font-semibold text-claude-text mb-2">Software Developers</h3>
+                    <p class="text-sm text-claude-text-muted">Backend, frontend, full-stack &mdash; level up your workflow with AI</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="200" class="terminal-window p-6 text-center hover:border-claude-orange transition-all duration-300">
+                    <div class="text-4xl mb-4">&#127891;</div>
+                    <h3 class="font-mono font-semibold text-claude-text mb-2">CS Students</h3>
+                    <p class="text-sm text-claude-text-muted">Get a massive career advantage before entering the job market</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="300" class="terminal-window p-6 text-center hover:border-claude-orange transition-all duration-300">
+                    <div class="text-4xl mb-4">&#128736;</div>
+                    <h3 class="font-mono font-semibold text-claude-text mb-2">Tech Leads & Managers</h3>
+                    <p class="text-sm text-claude-text-muted">Understand AI tools to lead AI-augmented engineering teams</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="400" class="terminal-window p-6 text-center hover:border-claude-orange transition-all duration-300">
+                    <div class="text-4xl mb-4">&#128640;</div>
+                    <h3 class="font-mono font-semibold text-claude-text mb-2">Entrepreneurs</h3>
+                    <p class="text-sm text-claude-text-muted">Build products 10x faster with AI-assisted development</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SYLLABUS SECTION ===== -->
+    <section id="syllabus" class="py-24 sm:py-32 relative">
+        <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span data-aos="fade-up" class="inline-block font-mono text-sm text-claude-orange mb-4 tracking-widest uppercase">// Curriculum</span>
+                <h2 data-aos="fade-up" data-aos-delay="100" class="text-4xl sm:text-5xl font-bold text-claude-text mb-4">
+                    5 Days. <span class="gradient-text">12 Projects.</span>
+                </h2>
+                <p data-aos="fade-up" data-aos-delay="200" class="text-claude-text-muted text-lg max-w-2xl mx-auto">
+                    Each day is a 2.5&ndash;3 hour intensive session. Theory meets practice. Every session ends with you shipping something real.
+                </p>
+            </div>
+
+            <!-- Timeline -->
+            <div class="relative">
+                <!-- Vertical line -->
+                <div class="absolute left-0 sm:left-8 top-0 bottom-0 w-px bg-gradient-to-b from-claude-orange via-claude-border to-transparent"></div>
+
+                <!-- Day 1 -->
+                <div data-aos="fade-up" data-aos-delay="100" class="day-card relative pl-8 sm:pl-20 mb-8">
+                    <div class="absolute left-0 sm:left-8 top-6 w-3 h-3 -translate-x-1.5 rounded-full bg-claude-orange glow-orange"></div>
+                    <div class="terminal-window">
+                        <div class="p-6 sm:p-8" onclick="toggleDay(this.closest('.day-card'))">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <span class="font-mono text-xs text-claude-orange">DAY 01 &bull; MON, MARCH 23</span>
+                                    <h3 class="text-xl sm:text-2xl font-bold text-claude-text mt-2">Introduction to Coding LLMs & AI Development</h3>
+                                    <p class="text-claude-text-muted text-sm mt-2">Session &bull; 2.5 hours</p>
+                                </div>
+                                <svg class="expand-icon w-6 h-6 text-claude-text-muted flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="day-content">
+                            <div class="px-6 sm:px-8 pb-8 border-t border-claude-border pt-6">
+                                <div class="grid sm:grid-cols-2 gap-8">
+                                    <div>
+                                        <h4 class="font-mono text-sm text-claude-orange mb-4 tracking-wider">TOPICS</h4>
+                                        <ul class="space-y-3">
+                                            <li class="flex items-start gap-3 text-claude-text-muted text-sm">
+                                                <span class="text-claude-orange mt-0.5">&#9654;</span>
+                                                What is an LLM, actually &mdash; the intuition behind how AI writes code
+                                            </li>
+                                            <li class="flex items-start gap-3 text-claude-text-muted text-sm">
+                                                <span class="text-claude-orange mt-0.5">&#9654;</span>
+                                                How to prompt effectively &mdash; zero-shot, few-shot, chain-of-thought
+                                            </li>
+                                            <li class="flex items-start gap-3 text-claude-text-muted text-sm">
+                                                <span class="text-claude-orange mt-0.5">&#9654;</span>
+                                                The new developer workflow: plan &rarr; generate &rarr; modify &rarr; verify &rarr; repeat
+                                            </li>
+                                            <li class="flex items-start gap-3 text-claude-text-muted text-sm">
+                                                <span class="text-claude-orange mt-0.5">&#9654;</span>
+                                                Setting up your AI-powered development environment
+                                            </li>
+                                            <li class="flex items-start gap-3 text-claude-text-muted text-sm">
+                                                <span class="text-claude-orange mt-0.5">&#9654;</span>
+                                                Overview of AI coding tools: Claude Code, Cursor, Windsurf, GitHub Copilot
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-mono text-sm text-claude-orange mb-4 tracking-wider">LIVE PROJECTS</h4>
+                                        <div class="space-y-4">
+                                            <div class="p-4 bg-claude-bg rounded-lg border border-claude-border">
+                                                <span class="font-mono text-xs text-claude-text-dim">PROJECT 01</span>
+                                                <h5 class="font-semibold text-claude-text mt-1">CLI App from Scratch</h5>
+                                                <p class="text-xs text-claude-text-muted mt-1">Build a fully working command-line application using only AI-assisted coding. Zero to working tool in one session.</p>
+                                            </div>
+                                            <div class="p-4 bg-claude-bg rounded-lg border border-claude-border">
+                                                <span class="font-mono text-xs text-claude-text-dim">PROJECT 02</span>
+                                                <h5 class="font-semibold text-claude-text mt-1">API from a Napkin Spec</h5>
+                                                <p class="text-xs text-claude-text-muted mt-1">Turn a plain-English API description into a working REST API with validation and documentation.</p>
+                                            </div>
+                                        </div>
+                                        <div class="mt-4">
+                                            <h4 class="font-mono text-sm text-claude-text-dim mb-2 tracking-wider">TOOLS</h4>
+                                            <div class="flex flex-wrap gap-2">
+                                                <span class="px-3 py-1 bg-claude-bg rounded-full border border-claude-border font-mono text-xs text-claude-text-muted">Claude Code</span>
+                                                <span class="px-3 py-1 bg-claude-bg rounded-full border border-claude-border font-mono text-xs text-claude-text-muted">Cursor</span>
+                                                <span class="px-3 py-1 bg-claude-bg rounded-full border border-claude-border font-mono text-xs text-claude-text-muted">GitHub Copilot</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 2 -->
+                <div data-aos="fade-up" data-aos-delay="200" class="day-card relative pl-8 sm:pl-20 mb-8">
+                    <div class="absolute left-0 sm:left-8 top-6 w-3 h-3 -translate-x-1.5 rounded-full bg-claude-orange glow-orange"></div>
+                    <div class="terminal-window">
+                        <div class="p-6 sm:p-8" onclick="toggleDay(this.closest('.day-card'))">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <span class="font-mono text-xs text-claude-orange">DAY 02 &bull; TUE, MARCH 24</span>
+                                    <h3 class="text-xl sm:text-2xl font-bold text-claude-text mt-2">The Anatomy of Coding Agents</h3>
+                                    <p class="text-claude-text-muted text-sm mt-2">Session &bull; 2.5 hours</p>
+                                </div>
+                                <svg class="expand-icon w-6 h-6 text-claude-text-muted flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="day-content">
+                            <div class="px-6 sm:px-8 pb-8 border-t border-claude-border pt-6">
+                                <div class="grid sm:grid-cols-2 gap-8">
+                                    <div>
+                                        <h4 class="font-mono text-sm text-claude-orange mb-4 tracking-wider">TOPICS</h4>
+                                        <ul class="space-y-3">
+                                            <li class="flex items-start gap-3 text-claude-text-muted text-sm">
+                                                <span class="text-claude-orange mt-0.5">&#9654;</span>
+                                                Agent architecture and components &mdash; how coding agents actually work
+                                            </li>
+                                            <li class="flex items-start gap-3 text-claude-text-muted text-sm">
+                                                <span class="text-claude-orange mt-0.5">&#9654;</span>
+                                                Tool use and function calling &mdash; how agents interact with the real world
+                                            </li>
+                                            <li class="flex items-start gap-3 text-claude-text-muted text-sm">
+                                                <span class="text-claude-orange mt-0.5">&#9654;</span>
+                                                MCP (Model Context Protocol) &mdash; the standard for agent-tool communication
+                                            </li>
+                                            <li class="flex items-start gap-3 text-claude-text-muted text-sm">
+                                                <span class="text-claude-orange mt-0.5">&#9654;</span>
+                                                Building custom MCP servers for your own workflows
+                                            </li>
+                                            <li class="flex items-start gap-3 text-claude-text-muted text-sm">
+                                                <span class="text-claude-orange mt-0.5">&#9654;</span>
+                                                The Modern Terminal &mdash; agentic development with Warp and Claude Code
+                                            </li>
+                                            <li class="flex items-start gap-3 text-claude-text-muted text-sm">
+                                                <span class="text-claude-orange mt-0.5">&#9654;</span>
+                                                Autonomous vs semi-autonomous agents &mdash; managing autonomy levels
+                                            </li>
+                                            <li class="flex items-start gap-3 text-claude-text-muted text-sm">
+                                                <span class="text-claude-orange mt-0.5">&#9654;</span>
+                                                Multi-agent workflows and orchestration
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-mono text-sm text-claude-orange mb-4 tracking-wider">LIVE PROJECTS</h4>
+                                        <div class="space-y-4">
+                                            <div class="p-4 bg-claude-bg rounded-lg border border-claude-border">
+                                                <span class="font-mono text-xs text-claude-text-dim">PROJECT 03</span>
+                                                <h5 class="font-semibold text-claude-text mt-1">Build a Coding Agent from Scratch</h5>
+                                                <p class="text-xs text-claude-text-muted mt-1">Implement a minimal coding agent that can read files, write code, and execute commands using the Claude API.</p>
+                                            </div>
+                                            <div class="p-4 bg-claude-bg rounded-lg border border-claude-border">
+                                                <span class="font-mono text-xs text-claude-text-dim">PROJECT 04</span>
+                                                <h5 class="font-semibold text-claude-text mt-1">Custom MCP Server</h5>
+                                                <p class="text-xs text-claude-text-muted mt-1">Build an MCP server that connects to a real-world service (GitHub, Notion, a database) and integrate it with your IDE.</p>
+                                            </div>
+                                        </div>
+                                        <div class="mt-4">
+                                            <h4 class="font-mono text-sm text-claude-text-dim mb-2 tracking-wider">TOOLS</h4>
+                                            <div class="flex flex-wrap gap-2">
+                                                <span class="px-3 py-1 bg-claude-bg rounded-full border border-claude-border font-mono text-xs text-claude-text-muted">Claude API</span>
+                                                <span class="px-3 py-1 bg-claude-bg rounded-full border border-claude-border font-mono text-xs text-claude-text-muted">Anthropic SDK</span>
+                                                <span class="px-3 py-1 bg-claude-bg rounded-full border border-claude-border font-mono text-xs text-claude-text-muted">MCP SDK</span>
+                                                <span class="px-3 py-1 bg-claude-bg rounded-full border border-claude-border font-mono text-xs text-claude-text-muted">Warp</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 3 -->
+                <div data-aos="fade-up" data-aos-delay="300" class="day-card relative pl-8 sm:pl-20 mb-8">
+                    <div class="absolute left-0 sm:left-8 top-6 w-3 h-3 -translate-x-1.5 rounded-full bg-claude-orange glow-orange"></div>
+                    <div class="terminal-window">
+                        <div class="p-6 sm:p-8" onclick="toggleDay(this.closest('.day-card'))">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <span class="font-mono text-xs text-claude-orange">DAY 03 &bull; WED, MARCH 25</span>
+                                    <h3 class="text-xl sm:text-2xl font-bold text-claude-text mt-2">Building Real Applications with AI</h3>
+                                    <p class="text-claude-text-muted text-sm mt-2">Session &bull; 3 hours</p>
+                                </div>
+                                <svg class="expand-icon w-6 h-6 text-claude-text-muted flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="day-content">
+                            <div class="px-6 sm:px-8 pb-8 border-t border-claude-border pt-6">
+                                <div class="grid sm:grid-cols-2 gap-8">
+                                    <div>
+                                        <h4 class="font-mono text-sm text-claude-orange mb-4 tracking-wider">TOPICS</h4>
+                                        <ul class="space-y-3">
+                                            <li class="flex items-start gap-3 text-claude-text-muted text-sm">
+                                                <span class="text-claude-orange mt-0.5">&#9654;</span>
+                                                PRD-driven development &mdash; writing specs that agents can execute
+                                            </li>
+                                            <li class="flex items-start gap-3 text-claude-text-muted text-sm">
+                                                <span class="text-claude-orange mt-0.5">&#9654;</span>
+                                                Vibe coding &mdash; rapid application building with AI
+                                            </li>
+                                            <li class="flex items-start gap-3 text-claude-text-muted text-sm">
+                                                <span class="text-claude-orange mt-0.5">&#9654;</span>
+                                                From first prompt to production-ready code
+                                            </li>
+                                            <li class="flex items-start gap-3 text-claude-text-muted text-sm">
+                                                <span class="text-claude-orange mt-0.5">&#9654;</span>
+                                                Managing multi-file codebases with AI agents
+                                            </li>
+                                            <li class="flex items-start gap-3 text-claude-text-muted text-sm">
+                                                <span class="text-claude-orange mt-0.5">&#9654;</span>
+                                                Automated UI generation &mdash; v0, Bolt, Lovable, Screenshot-to-Code
+                                            </li>
+                                            <li class="flex items-start gap-3 text-claude-text-muted text-sm">
+                                                <span class="text-claude-orange mt-0.5">&#9654;</span>
+                                                End-to-end apps with a single prompt &mdash; how far can we push it?
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-mono text-sm text-claude-orange mb-4 tracking-wider">LIVE PROJECTS</h4>
+                                        <div class="space-y-4">
+                                            <div class="p-4 bg-claude-bg rounded-lg border border-claude-border">
+                                                <span class="font-mono text-xs text-claude-text-dim">PROJECT 05</span>
+                                                <h5 class="font-semibold text-claude-text mt-1">Full-Stack SaaS App</h5>
+                                                <p class="text-xs text-claude-text-muted mt-1">Build a complete SaaS application from a PRD. Frontend + backend + database. PRD to working app in one session.</p>
+                                            </div>
+                                            <div class="p-4 bg-claude-bg rounded-lg border border-claude-border">
+                                                <span class="font-mono text-xs text-claude-text-dim">PROJECT 06</span>
+                                                <h5 class="font-semibold text-claude-text mt-1">Chrome Extension</h5>
+                                                <p class="text-xs text-claude-text-muted mt-1">Build and package a Chrome extension using AI-assisted development.</p>
+                                            </div>
+                                            <div class="p-4 bg-claude-bg rounded-lg border border-claude-border">
+                                                <span class="font-mono text-xs text-claude-text-dim">PROJECT 07</span>
+                                                <h5 class="font-semibold text-claude-text mt-1">Landing Page Sprint</h5>
+                                                <p class="text-xs text-claude-text-muted mt-1">Take a design screenshot and convert it to a pixel-perfect, responsive website.</p>
+                                            </div>
+                                        </div>
+                                        <div class="mt-4">
+                                            <h4 class="font-mono text-sm text-claude-text-dim mb-2 tracking-wider">TOOLS</h4>
+                                            <div class="flex flex-wrap gap-2">
+                                                <span class="px-3 py-1 bg-claude-bg rounded-full border border-claude-border font-mono text-xs text-claude-text-muted">Claude Code</span>
+                                                <span class="px-3 py-1 bg-claude-bg rounded-full border border-claude-border font-mono text-xs text-claude-text-muted">v0</span>
+                                                <span class="px-3 py-1 bg-claude-bg rounded-full border border-claude-border font-mono text-xs text-claude-text-muted">Bolt</span>
+                                                <span class="px-3 py-1 bg-claude-bg rounded-full border border-claude-border font-mono text-xs text-claude-text-muted">Lovable</span>
+                                                <span class="px-3 py-1 bg-claude-bg rounded-full border border-claude-border font-mono text-xs text-claude-text-muted">Vercel</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 4 -->
+                <div data-aos="fade-up" data-aos-delay="400" class="day-card relative pl-8 sm:pl-20 mb-8">
+                    <div class="absolute left-0 sm:left-8 top-6 w-3 h-3 -translate-x-1.5 rounded-full bg-claude-orange glow-orange"></div>
+                    <div class="terminal-window">
+                        <div class="p-6 sm:p-8" onclick="toggleDay(this.closest('.day-card'))">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <span class="font-mono text-xs text-claude-orange">DAY 04 &bull; THU, MARCH 26</span>
+                                    <h3 class="text-xl sm:text-2xl font-bold text-claude-text mt-2">AI Testing, Security & Secure Vibe Coding</h3>
+                                    <p class="text-claude-text-muted text-sm mt-2">Session &bull; 3 hours</p>
+                                </div>
+                                <svg class="expand-icon w-6 h-6 text-claude-text-muted flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="day-content">
+                            <div class="px-6 sm:px-8 pb-8 border-t border-claude-border pt-6">
+                                <div class="grid sm:grid-cols-2 gap-8">
+                                    <div>
+                                        <h4 class="font-mono text-sm text-claude-orange mb-4 tracking-wider">TOPICS</h4>
+                                        <ul class="space-y-3">
+                                            <li class="flex items-start gap-3 text-claude-text-muted text-sm">
+                                                <span class="text-claude-orange mt-0.5">&#9654;</span>
+                                                Why &ldquo;vibe coding&rdquo; without security is dangerous &mdash; Secure Vibe Coding
+                                            </li>
+                                            <li class="flex items-start gap-3 text-claude-text-muted text-sm">
+                                                <span class="text-claude-orange mt-0.5">&#9654;</span>
+                                                Common vulnerabilities in AI-generated code (OWASP Top 10)
+                                            </li>
+                                            <li class="flex items-start gap-3 text-claude-text-muted text-sm">
+                                                <span class="text-claude-orange mt-0.5">&#9654;</span>
+                                                Vulnerability scanning with Semgrep, CodeQL, Snyk &mdash; AI-powered SAST & DAST
+                                            </li>
+                                            <li class="flex items-start gap-3 text-claude-text-muted text-sm">
+                                                <span class="text-claude-orange mt-0.5">&#9654;</span>
+                                                Prompt injection attacks on coding agents &mdash; and how to defend
+                                            </li>
+                                            <li class="flex items-start gap-3 text-claude-text-muted text-sm">
+                                                <span class="text-claude-orange mt-0.5">&#9654;</span>
+                                                AI-generated test suites &mdash; unit, integration, end-to-end
+                                            </li>
+                                            <li class="flex items-start gap-3 text-claude-text-muted text-sm">
+                                                <span class="text-claude-orange mt-0.5">&#9654;</span>
+                                                AI-assisted code review, debugging, and documentation
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-mono text-sm text-claude-orange mb-4 tracking-wider">LIVE PROJECTS</h4>
+                                        <div class="space-y-4">
+                                            <div class="p-4 bg-claude-bg rounded-lg border border-claude-border">
+                                                <span class="font-mono text-xs text-claude-text-dim">PROJECT 08</span>
+                                                <h5 class="font-semibold text-claude-text mt-1">Test Suite Generation</h5>
+                                                <p class="text-xs text-claude-text-muted mt-1">Take a real codebase and generate a comprehensive test suite using AI.</p>
+                                            </div>
+                                            <div class="p-4 bg-claude-bg rounded-lg border border-claude-border">
+                                                <span class="font-mono text-xs text-claude-text-dim">PROJECT 09</span>
+                                                <h5 class="font-semibold text-claude-text mt-1">Security Audit & Fix</h5>
+                                                <p class="text-xs text-claude-text-muted mt-1">Use Semgrep + AI tools to find every vulnerability in a deliberately insecure app, generate fixes, and verify them.</p>
+                                            </div>
+                                            <div class="p-4 bg-claude-bg rounded-lg border border-claude-border">
+                                                <span class="font-mono text-xs text-claude-text-dim">PROJECT 10</span>
+                                                <h5 class="font-semibold text-claude-text mt-1">Automated Code Review Pipeline</h5>
+                                                <p class="text-xs text-claude-text-muted mt-1">Build a CI pipeline that auto-reviews PRs, flags security issues, and suggests improvements.</p>
+                                            </div>
+                                        </div>
+                                        <div class="mt-4">
+                                            <h4 class="font-mono text-sm text-claude-text-dim mb-2 tracking-wider">TOOLS</h4>
+                                            <div class="flex flex-wrap gap-2">
+                                                <span class="px-3 py-1 bg-claude-bg rounded-full border border-claude-border font-mono text-xs text-claude-text-muted">Semgrep</span>
+                                                <span class="px-3 py-1 bg-claude-bg rounded-full border border-claude-border font-mono text-xs text-claude-text-muted">Snyk</span>
+                                                <span class="px-3 py-1 bg-claude-bg rounded-full border border-claude-border font-mono text-xs text-claude-text-muted">Vitest / Jest</span>
+                                                <span class="px-3 py-1 bg-claude-bg rounded-full border border-claude-border font-mono text-xs text-claude-text-muted">GitHub Actions</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Day 5 -->
+                <div data-aos="fade-up" data-aos-delay="500" class="day-card relative pl-8 sm:pl-20 mb-8">
+                    <div class="absolute left-0 sm:left-8 top-6 w-3 h-3 -translate-x-1.5 rounded-full bg-claude-orange glow-orange"></div>
+                    <div class="terminal-window">
+                        <div class="p-6 sm:p-8" onclick="toggleDay(this.closest('.day-card'))">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <span class="font-mono text-xs text-claude-orange">DAY 05 &bull; FRI, MARCH 27</span>
+                                    <h3 class="text-xl sm:text-2xl font-bold text-claude-text mt-2">Deployment, DevOps & What's Next</h3>
+                                    <p class="text-claude-text-muted text-sm mt-2">Session &bull; 3 hours</p>
+                                </div>
+                                <svg class="expand-icon w-6 h-6 text-claude-text-muted flex-shrink-0 ml-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="day-content">
+                            <div class="px-6 sm:px-8 pb-8 border-t border-claude-border pt-6">
+                                <div class="grid sm:grid-cols-2 gap-8">
+                                    <div>
+                                        <h4 class="font-mono text-sm text-claude-orange mb-4 tracking-wider">TOPICS</h4>
+                                        <ul class="space-y-3">
+                                            <li class="flex items-start gap-3 text-claude-text-muted text-sm">
+                                                <span class="text-claude-orange mt-0.5">&#9654;</span>
+                                                AI-powered CI/CD &mdash; automating your entire deployment pipeline
+                                            </li>
+                                            <li class="flex items-start gap-3 text-claude-text-muted text-sm">
+                                                <span class="text-claude-orange mt-0.5">&#9654;</span>
+                                                Infrastructure with AI &mdash; Docker, Terraform, cloud provisioning
+                                            </li>
+                                            <li class="flex items-start gap-3 text-claude-text-muted text-sm">
+                                                <span class="text-claude-orange mt-0.5">&#9654;</span>
+                                                Monitoring, observability, and AI-powered alerting
+                                            </li>
+                                            <li class="flex items-start gap-3 text-claude-text-muted text-sm">
+                                                <span class="text-claude-orange mt-0.5">&#9654;</span>
+                                                Incident response with AI &mdash; automated triage, debug, resolve
+                                            </li>
+                                            <li class="flex items-start gap-3 text-claude-text-muted text-sm">
+                                                <span class="text-claude-orange mt-0.5">&#9654;</span>
+                                                The future of software development &mdash; what changes, what stays
+                                            </li>
+                                            <li class="flex items-start gap-3 text-claude-text-muted text-sm">
+                                                <span class="text-claude-orange mt-0.5">&#9654;</span>
+                                                Building your personal AI-powered workflow &mdash; your competitive edge
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-mono text-sm text-claude-orange mb-4 tracking-wider">LIVE PROJECTS</h4>
+                                        <div class="space-y-4">
+                                            <div class="p-4 bg-claude-bg rounded-lg border border-claude-border">
+                                                <span class="font-mono text-xs text-claude-text-dim">PROJECT 11</span>
+                                                <h5 class="font-semibold text-claude-text mt-1">Capstone: Ship It</h5>
+                                                <p class="text-xs text-claude-text-muted mt-1">Build, test, secure, and deploy a complete application from scratch. Auth, database, tests, CI/CD, live URL. Start to finish.</p>
+                                            </div>
+                                            <div class="p-4 bg-claude-bg rounded-lg border border-claude-border">
+                                                <span class="font-mono text-xs text-claude-text-dim">PROJECT 12</span>
+                                                <h5 class="font-semibold text-claude-text mt-1">Your Own Developer Tool</h5>
+                                                <p class="text-xs text-claude-text-muted mt-1">Build a tool that helps YOU &mdash; an MCP server, CLI tool, GitHub Action, or VS Code extension for your workflow.</p>
+                                            </div>
+                                        </div>
+                                        <div class="mt-4">
+                                            <h4 class="font-mono text-sm text-claude-text-dim mb-2 tracking-wider">TOOLS</h4>
+                                            <div class="flex flex-wrap gap-2">
+                                                <span class="px-3 py-1 bg-claude-bg rounded-full border border-claude-border font-mono text-xs text-claude-text-muted">Docker</span>
+                                                <span class="px-3 py-1 bg-claude-bg rounded-full border border-claude-border font-mono text-xs text-claude-text-muted">Vercel</span>
+                                                <span class="px-3 py-1 bg-claude-bg rounded-full border border-claude-border font-mono text-xs text-claude-text-muted">Railway</span>
+                                                <span class="px-3 py-1 bg-claude-bg rounded-full border border-claude-border font-mono text-xs text-claude-text-muted">GitHub Actions</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PROJECTS GRID ===== -->
+    <section id="projects" class="py-24 sm:py-32 relative">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span data-aos="fade-up" class="inline-block font-mono text-sm text-claude-orange mb-4 tracking-widest uppercase">// What You'll Build</span>
+                <h2 data-aos="fade-up" data-aos-delay="100" class="text-4xl sm:text-5xl font-bold text-claude-text mb-4">
+                    12 Projects. <span class="gradient-text">5 Days.</span>
+                </h2>
+                <p data-aos="fade-up" data-aos-delay="200" class="text-claude-text-muted text-lg max-w-2xl mx-auto">
+                    Every project is built live, in front of you, with real tools. No slides, no lectures &mdash; just shipping.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Project cards -->
+                <div data-aos="fade-up" data-aos-delay="50" class="project-card terminal-window p-6">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="font-mono text-xs px-2 py-1 bg-claude-orange/10 text-claude-orange rounded">DAY 1</span>
+                        <span class="font-mono text-xs text-claude-text-dim">#01</span>
+                    </div>
+                    <h3 class="font-semibold text-claude-text mb-2">CLI App from Scratch</h3>
+                    <p class="text-sm text-claude-text-muted">Build a complete CLI tool using only AI-assisted coding</p>
+                </div>
+
+                <div data-aos="fade-up" data-aos-delay="100" class="project-card terminal-window p-6">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="font-mono text-xs px-2 py-1 bg-claude-orange/10 text-claude-orange rounded">DAY 1</span>
+                        <span class="font-mono text-xs text-claude-text-dim">#02</span>
+                    </div>
+                    <h3 class="font-semibold text-claude-text mb-2">API from a Napkin Spec</h3>
+                    <p class="text-sm text-claude-text-muted">Turn plain-English specs into a working REST API</p>
+                </div>
+
+                <div data-aos="fade-up" data-aos-delay="150" class="project-card terminal-window p-6">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="font-mono text-xs px-2 py-1 bg-claude-orange/10 text-claude-orange rounded">DAY 2</span>
+                        <span class="font-mono text-xs text-claude-text-dim">#03</span>
+                    </div>
+                    <h3 class="font-semibold text-claude-text mb-2">Coding Agent from Scratch</h3>
+                    <p class="text-sm text-claude-text-muted">Build your own coding agent with Claude API + tool use</p>
+                </div>
+
+                <div data-aos="fade-up" data-aos-delay="200" class="project-card terminal-window p-6">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="font-mono text-xs px-2 py-1 bg-claude-orange/10 text-claude-orange rounded">DAY 2</span>
+                        <span class="font-mono text-xs text-claude-text-dim">#04</span>
+                    </div>
+                    <h3 class="font-semibold text-claude-text mb-2">Custom MCP Server</h3>
+                    <p class="text-sm text-claude-text-muted">Connect agents to GitHub, Notion, or any API via MCP</p>
+                </div>
+
+                <div data-aos="fade-up" data-aos-delay="250" class="project-card terminal-window p-6">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="font-mono text-xs px-2 py-1 bg-claude-orange/10 text-claude-orange rounded">DAY 3</span>
+                        <span class="font-mono text-xs text-claude-text-dim">#05</span>
+                    </div>
+                    <h3 class="font-semibold text-claude-text mb-2">Full-Stack SaaS App</h3>
+                    <p class="text-sm text-claude-text-muted">PRD to working SaaS application in a single session</p>
+                </div>
+
+                <div data-aos="fade-up" data-aos-delay="300" class="project-card terminal-window p-6">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="font-mono text-xs px-2 py-1 bg-claude-orange/10 text-claude-orange rounded">DAY 3</span>
+                        <span class="font-mono text-xs text-claude-text-dim">#06</span>
+                    </div>
+                    <h3 class="font-semibold text-claude-text mb-2">Chrome Extension</h3>
+                    <p class="text-sm text-claude-text-muted">Build and package a Chrome extension with AI</p>
+                </div>
+
+                <div data-aos="fade-up" data-aos-delay="350" class="project-card terminal-window p-6">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="font-mono text-xs px-2 py-1 bg-claude-orange/10 text-claude-orange rounded">DAY 3</span>
+                        <span class="font-mono text-xs text-claude-text-dim">#07</span>
+                    </div>
+                    <h3 class="font-semibold text-claude-text mb-2">Landing Page Sprint</h3>
+                    <p class="text-sm text-claude-text-muted">Screenshot to pixel-perfect responsive website</p>
+                </div>
+
+                <div data-aos="fade-up" data-aos-delay="400" class="project-card terminal-window p-6">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="font-mono text-xs px-2 py-1 bg-claude-orange/10 text-claude-orange rounded">DAY 4</span>
+                        <span class="font-mono text-xs text-claude-text-dim">#08</span>
+                    </div>
+                    <h3 class="font-semibold text-claude-text mb-2">Test Suite Generation</h3>
+                    <p class="text-sm text-claude-text-muted">AI-powered comprehensive test generation for real codebases</p>
+                </div>
+
+                <div data-aos="fade-up" data-aos-delay="450" class="project-card terminal-window p-6">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="font-mono text-xs px-2 py-1 bg-claude-orange/10 text-claude-orange rounded">DAY 4</span>
+                        <span class="font-mono text-xs text-claude-text-dim">#09</span>
+                    </div>
+                    <h3 class="font-semibold text-claude-text mb-2">Security Audit & Fix</h3>
+                    <p class="text-sm text-claude-text-muted">Hunt vulnerabilities with Semgrep + AI, then fix them</p>
+                </div>
+
+                <div data-aos="fade-up" data-aos-delay="500" class="project-card terminal-window p-6">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="font-mono text-xs px-2 py-1 bg-claude-orange/10 text-claude-orange rounded">DAY 4</span>
+                        <span class="font-mono text-xs text-claude-text-dim">#10</span>
+                    </div>
+                    <h3 class="font-semibold text-claude-text mb-2">Code Review Pipeline</h3>
+                    <p class="text-sm text-claude-text-muted">CI pipeline that auto-reviews PRs and flags issues</p>
+                </div>
+
+                <div data-aos="fade-up" data-aos-delay="550" class="project-card terminal-window p-6 border-claude-orange/30">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="font-mono text-xs px-2 py-1 bg-claude-orange/20 text-claude-orange rounded">DAY 5</span>
+                        <span class="font-mono text-xs text-claude-text-dim">#11</span>
+                    </div>
+                    <h3 class="font-semibold text-claude-text mb-2">Capstone: Ship It</h3>
+                    <p class="text-sm text-claude-text-muted">Build, test, secure, and deploy a complete app end-to-end</p>
+                </div>
+
+                <div data-aos="fade-up" data-aos-delay="600" class="project-card terminal-window p-6 border-claude-orange/30">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="font-mono text-xs px-2 py-1 bg-claude-orange/20 text-claude-orange rounded">DAY 5</span>
+                        <span class="font-mono text-xs text-claude-text-dim">#12</span>
+                    </div>
+                    <h3 class="font-semibold text-claude-text mb-2">Your Own Dev Tool</h3>
+                    <p class="text-sm text-claude-text-muted">Build an MCP server, CLI tool, or extension for YOUR workflow</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== INSTRUCTOR SECTION ===== -->
+    <section id="instructor" class="py-24 sm:py-32 relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span data-aos="fade-up" class="inline-block font-mono text-sm text-claude-orange mb-4 tracking-widest uppercase">// Your Instructor</span>
+                <h2 data-aos="fade-up" data-aos-delay="100" class="text-4xl sm:text-5xl font-bold text-claude-text">
+                    Learn from the <span class="gradient-text">best</span>
+                </h2>
+            </div>
+
+            <div data-aos="fade-up" data-aos-delay="200" class="terminal-window">
+                <div class="terminal-header">
+                    <div class="terminal-dot bg-red-500"></div>
+                    <div class="terminal-dot bg-yellow-500"></div>
+                    <div class="terminal-dot bg-green-500"></div>
+                    <span class="font-mono text-xs text-claude-text-dim ml-2">instructor.json</span>
+                </div>
+                <div class="p-8 sm:p-10">
+                    <div class="flex flex-col sm:flex-row items-center gap-8">
+                        <div class="w-32 h-32 rounded-2xl bg-gradient-to-br from-claude-orange to-claude-orange-dark flex items-center justify-center flex-shrink-0">
+                            <span class="text-5xl font-bold text-white font-mono">RD</span>
+                        </div>
+                        <div class="text-center sm:text-left">
+                            <h3 class="text-2xl font-bold text-claude-text">Dr. Raj Dandekar</h3>
+                            <p class="font-mono text-claude-orange mt-1">MIT PhD</p>
+                            <p class="text-claude-text-muted mt-4 leading-relaxed">
+                                PhD from the Massachusetts Institute of Technology. Researcher and educator at the intersection of AI and software engineering. Building the next generation of AI-powered developer tools at Vizuara.
+                            </p>
+                            <div class="flex flex-wrap items-center justify-center sm:justify-start gap-3 mt-4">
+                                <span class="px-3 py-1 bg-claude-bg rounded-full border border-claude-border font-mono text-xs text-claude-text-muted">MIT</span>
+                                <span class="px-3 py-1 bg-claude-bg rounded-full border border-claude-border font-mono text-xs text-claude-text-muted">Vizuara AI</span>
+                                <span class="px-3 py-1 bg-claude-bg rounded-full border border-claude-border font-mono text-xs text-claude-text-muted">AI Engineering</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== PRICING SECTION ===== -->
+    <section id="pricing" class="py-24 sm:py-32 relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span data-aos="fade-up" class="inline-block font-mono text-sm text-claude-orange mb-4 tracking-widest uppercase">// Pricing</span>
+                <h2 data-aos="fade-up" data-aos-delay="100" class="text-4xl sm:text-5xl font-bold text-claude-text mb-4">
+                    Invest in your <span class="gradient-text">future</span>
+                </h2>
+            </div>
+
+            <div data-aos="fade-up" data-aos-delay="200" class="terminal-window glow-orange max-w-lg mx-auto">
+                <div class="terminal-header">
+                    <div class="terminal-dot bg-red-500"></div>
+                    <div class="terminal-dot bg-yellow-500"></div>
+                    <div class="terminal-dot bg-green-500"></div>
+                    <span class="font-mono text-xs text-claude-text-dim ml-2">pricing.config</span>
+                </div>
+                <div class="p-8 sm:p-10 text-center">
+                    <div class="inline-block px-4 py-1 bg-claude-orange/10 text-claude-orange font-mono text-xs rounded-full mb-6">
+                        5-DAY BOOTCAMP
+                    </div>
+                    <div class="mb-6">
+                        <span class="text-5xl sm:text-6xl font-bold text-claude-text">&#8377;25,000</span>
+                    </div>
+
+                    <ul class="space-y-4 text-left max-w-sm mx-auto mb-8">
+                        <li class="flex items-center gap-3 text-claude-text-muted text-sm">
+                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            5 days of live, intensive sessions
+                        </li>
+                        <li class="flex items-center gap-3 text-claude-text-muted text-sm">
+                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            12 hands-on projects built live
+                        </li>
+                        <li class="flex items-center gap-3 text-claude-text-muted text-sm">
+                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            All session recordings
+                        </li>
+                        <li class="flex items-center gap-3 text-claude-text-muted text-sm">
+                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Complete code files and resources
+                        </li>
+                        <li class="flex items-center gap-3 text-claude-text-muted text-sm">
+                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Community access and support
+                        </li>
+                        <li class="flex items-center gap-3 text-claude-text-muted text-sm">
+                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            Certificate of completion
+                        </li>
+                        <li class="flex items-center gap-3 text-claude-text-muted text-sm">
+                            <svg class="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+                            15+ modern AI development tools covered
+                        </li>
+                    </ul>
+
+                    <a href="https://vizuara.ai/courses/course_20006260" target="_blank" class="relative pulse-ring inline-block px-10 py-4 bg-claude-orange hover:bg-claude-orange-dark text-white font-mono font-semibold rounded-xl transition-all duration-300 glow-orange glow-orange-hover text-lg w-full sm:w-auto">
+                        Enroll Now
+                    </a>
+
+                    <p class="font-mono text-xs text-claude-text-dim mt-4">
+                        March 23&ndash;27, 2026 &bull; Live Online
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FAQ SECTION ===== -->
+    <section id="faq" class="py-24 sm:py-32 relative">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <span data-aos="fade-up" class="inline-block font-mono text-sm text-claude-orange mb-4 tracking-widest uppercase">// FAQ</span>
+                <h2 data-aos="fade-up" data-aos-delay="100" class="text-4xl sm:text-5xl font-bold text-claude-text">
+                    Frequently Asked <span class="gradient-text">Questions</span>
+                </h2>
+            </div>
+
+            <div class="space-y-4">
+                <div data-aos="fade-up" data-aos-delay="100" class="faq-item terminal-window">
+                    <div class="p-6 cursor-pointer" onclick="toggleFaq(this.parentElement)">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-semibold text-claude-text text-sm sm:text-base pr-4">What are the prerequisites for this bootcamp?</h3>
+                            <span class="faq-icon text-claude-orange text-xl flex-shrink-0 font-mono">+</span>
+                        </div>
+                        <div class="faq-answer text-claude-text-muted text-sm leading-relaxed">
+                            Basic familiarity with any programming language and comfort using a terminal/command line. You don't need to be an expert &mdash; this bootcamp is designed for a broad audience, from students to senior engineers to tech leads. If you can write a simple function and use git, you're ready.
+                        </div>
+                    </div>
+                </div>
+
+                <div data-aos="fade-up" data-aos-delay="150" class="faq-item terminal-window">
+                    <div class="p-6 cursor-pointer" onclick="toggleFaq(this.parentElement)">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-semibold text-claude-text text-sm sm:text-base pr-4">Is this bootcamp live or pre-recorded?</h3>
+                            <span class="faq-icon text-claude-orange text-xl flex-shrink-0 font-mono">+</span>
+                        </div>
+                        <div class="faq-answer text-claude-text-muted text-sm leading-relaxed">
+                            100% live and online. All 12 projects are built in real-time during the sessions. You'll be able to ask questions, follow along, and code alongside the instructor. All sessions are also recorded for later review.
+                        </div>
+                    </div>
+                </div>
+
+                <div data-aos="fade-up" data-aos-delay="200" class="faq-item terminal-window">
+                    <div class="p-6 cursor-pointer" onclick="toggleFaq(this.parentElement)">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-semibold text-claude-text text-sm sm:text-base pr-4">What if I miss a session?</h3>
+                            <span class="faq-icon text-claude-orange text-xl flex-shrink-0 font-mono">+</span>
+                        </div>
+                        <div class="faq-answer text-claude-text-muted text-sm leading-relaxed">
+                            All sessions are recorded and available for replay. You'll also get complete code files, resources, and notes for every session. We recommend attending live for the best experience, but recordings ensure you won't miss anything.
+                        </div>
+                    </div>
+                </div>
+
+                <div data-aos="fade-up" data-aos-delay="250" class="faq-item terminal-window">
+                    <div class="p-6 cursor-pointer" onclick="toggleFaq(this.parentElement)">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-semibold text-claude-text text-sm sm:text-base pr-4">Do I need API keys or paid subscriptions to any tools?</h3>
+                            <span class="faq-icon text-claude-orange text-xl flex-shrink-0 font-mono">+</span>
+                        </div>
+                        <div class="faq-answer text-claude-text-muted text-sm leading-relaxed">
+                            Some projects use the Claude API and other AI tools that may require API keys. We'll provide guidance on setting up free tiers and trial accounts. Most tools we use have generous free tiers sufficient for the bootcamp exercises.
+                        </div>
+                    </div>
+                </div>
+
+                <div data-aos="fade-up" data-aos-delay="300" class="faq-item terminal-window">
+                    <div class="p-6 cursor-pointer" onclick="toggleFaq(this.parentElement)">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-semibold text-claude-text text-sm sm:text-base pr-4">What programming language will be used?</h3>
+                            <span class="faq-icon text-claude-orange text-xl flex-shrink-0 font-mono">+</span>
+                        </div>
+                        <div class="faq-answer text-claude-text-muted text-sm leading-relaxed">
+                            The bootcamp is broadly language-agnostic, but projects will primarily use Python and TypeScript/JavaScript since they're the most common in AI-assisted development. The principles and tools you'll learn apply to any language.
+                        </div>
+                    </div>
+                </div>
+
+                <div data-aos="fade-up" data-aos-delay="350" class="faq-item terminal-window">
+                    <div class="p-6 cursor-pointer" onclick="toggleFaq(this.parentElement)">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-semibold text-claude-text text-sm sm:text-base pr-4">How is this different from the Stanford CS146S course?</h3>
+                            <span class="faq-icon text-claude-orange text-xl flex-shrink-0 font-mono">+</span>
+                        </div>
+                        <div class="faq-answer text-claude-text-muted text-sm leading-relaxed">
+                            Stanford's CS146S ran over 10 weeks as an academic course. We've taken that vision, updated it for 2026, and compressed it into 5 intensive days with 12 real projects. Less theory, more building. We also cover newer tools and paradigms like Secure Vibe Coding, Semgrep for AI code, and advanced agentic development patterns with Warp.
+                        </div>
+                    </div>
+                </div>
+
+                <div data-aos="fade-up" data-aos-delay="400" class="faq-item terminal-window">
+                    <div class="p-6 cursor-pointer" onclick="toggleFaq(this.parentElement)">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-semibold text-claude-text text-sm sm:text-base pr-4">Will I get a certificate?</h3>
+                            <span class="faq-icon text-claude-orange text-xl flex-shrink-0 font-mono">+</span>
+                        </div>
+                        <div class="faq-answer text-claude-text-muted text-sm leading-relaxed">
+                            Yes. All participants who complete the bootcamp will receive a certificate of completion from Vizuara.
+                        </div>
+                    </div>
+                </div>
+
+                <div data-aos="fade-up" data-aos-delay="450" class="faq-item terminal-window">
+                    <div class="p-6 cursor-pointer" onclick="toggleFaq(this.parentElement)">
+                        <div class="flex items-center justify-between">
+                            <h3 class="font-semibold text-claude-text text-sm sm:text-base pr-4">What are the session timings?</h3>
+                            <span class="faq-icon text-claude-orange text-xl flex-shrink-0 font-mono">+</span>
+                        </div>
+                        <div class="faq-answer text-claude-text-muted text-sm leading-relaxed">
+                            Each day features a 2.5&ndash;3 hour session. The exact timing will be shared with enrolled participants. All sessions are recorded if you can't attend live.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FINAL CTA ===== -->
+    <section class="py-24 sm:py-32 relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div data-aos="fade-up" class="terminal-window p-10 sm:p-16 glow-orange">
+                <div class="font-mono text-sm text-claude-text-muted mb-6">
+                    <span class="text-claude-orange">$</span> <span class="text-green-400">git checkout</span> -b modern-software-developer
+                </div>
+                <h2 class="text-3xl sm:text-5xl font-bold text-claude-text mb-6">
+                    Ready to become a<br><span class="gradient-text">Modern Software Developer?</span>
+                </h2>
+                <p class="text-claude-text-muted text-lg max-w-xl mx-auto mb-8">
+                    5 days. 12 projects. The tools and workflows that will define software engineering for the next decade. Don't get left behind.
+                </p>
+                <a href="https://vizuara.ai/courses/course_20006260" target="_blank" class="relative pulse-ring inline-block px-10 py-4 bg-claude-orange hover:bg-claude-orange-dark text-white font-mono font-semibold rounded-xl transition-all duration-300 glow-orange glow-orange-hover text-lg">
+                    Enroll Now &mdash; &#8377;25,000
+                </a>
+                <p class="font-mono text-xs text-claude-text-dim mt-6">
+                    Starts March 23, 2026 &bull; Limited seats &bull; Live Online
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="py-12 border-t border-claude-border">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col sm:flex-row items-center justify-between gap-6">
+                <div class="flex items-center gap-3">
+                    <img src="assets/vizlogo.png" alt="Vizuara" class="h-6 w-auto" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                    <div class="hidden items-center gap-2">
+                        <div class="w-6 h-6 rounded bg-claude-orange flex items-center justify-center">
+                            <span class="font-mono font-bold text-white text-xs">&gt;_</span>
+                        </div>
+                        <span class="font-mono font-medium text-claude-text text-sm">vizuara</span>
+                    </div>
+                    <span class="text-claude-text-dim font-mono text-xs">&bull; The Modern Software Developer Bootcamp</span>
+                </div>
+                <div class="flex items-center gap-6">
+                    <a href="mailto:hello@vizuara.com" class="font-mono text-xs text-claude-text-muted hover:text-claude-orange transition-colors">hello@vizuara.com</a>
+                    <a href="https://vizuara.ai" target="_blank" class="font-mono text-xs text-claude-text-muted hover:text-claude-orange transition-colors">vizuara.ai</a>
+                </div>
+            </div>
+            <div class="text-center mt-8">
+                <p class="font-mono text-xs text-claude-text-dim">&copy; 2026 Vizuara AI Labs. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 800,
+            easing: 'ease-out-cubic',
+            once: true,
+            offset: 80,
+        });
+
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.style.borderBottomColor = '#2A2A2A';
+                navbar.style.background = 'rgba(10, 10, 10, 0.95)';
+            } else {
+                navbar.style.borderBottomColor = 'transparent';
+                navbar.style.background = 'rgba(10, 10, 10, 0.8)';
+            }
+        });
+
+        // Mobile nav toggle
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-nav').classList.add('open');
+        });
+
+        document.getElementById('mobile-close-btn').addEventListener('click', () => {
+            document.getElementById('mobile-nav').classList.remove('open');
+        });
+
+        // Close mobile nav on link click
+        document.querySelectorAll('.mobile-nav-link').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('mobile-nav').classList.remove('open');
+            });
+        });
+
+        // Day card toggle
+        function toggleDay(card) {
+            const wasExpanded = card.classList.contains('expanded');
+            // Close all
+            document.querySelectorAll('.day-card').forEach(c => c.classList.remove('expanded'));
+            // Open clicked if it was closed
+            if (!wasExpanded) {
+                card.classList.add('expanded');
+            }
+        }
+
+        // FAQ toggle
+        function toggleFaq(item) {
+            const wasActive = item.classList.contains('active');
+            // Close all
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+            // Open clicked if it was closed
+            if (!wasActive) {
+                item.classList.add('active');
+            }
+        }
+
+        // Floating particles
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = 20;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDuration = (Math.random() * 15 + 10) + 's';
+                particle.style.animationDelay = (Math.random() * 10) + 's';
+                particle.style.width = (Math.random() * 3 + 1) + 'px';
+                particle.style.height = particle.style.width;
+                container.appendChild(particle);
+            }
+        }
+        createParticles();
+
+        // Active nav link tracking
+        const sections = document.querySelectorAll('section[id]');
+        const navLinks = document.querySelectorAll('.nav-link');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Expand first day card by default after a short delay
+        setTimeout(() => {
+            const firstDay = document.querySelector('.day-card');
+            if (firstDay) firstDay.classList.add('expanded');
+        }, 1500);
+    </script>
+</body>
+</html>
