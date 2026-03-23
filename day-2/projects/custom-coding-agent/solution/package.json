@@ -1,0 +1,13 @@
+{
+  "name": "custom-coding-agent",
+  "version": "1.0.0",
+  "description": "A mini Claude Code - Custom coding agent built from scratch",
+  "type": "module",
+  "main": "agent.js",
+  "scripts": {
+    "start": "node agent.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0"
+  }
+}

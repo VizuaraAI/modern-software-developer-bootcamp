@@ -1,0 +1,16 @@
+{
+  "name": "test-suite-demo",
+  "version": "1.0.0",
+  "description": "Starter project for AI-generated test writing workshop",
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui"
+  },
+  "devDependencies": {
+    "vitest": "^2.1.0",
+    "@vitest/coverage-v8": "^2.1.0"
+  }
+}

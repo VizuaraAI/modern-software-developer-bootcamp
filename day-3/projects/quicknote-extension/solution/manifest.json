@@ -1,0 +1,25 @@
+{
+  "manifest_version": 3,
+  "name": "QuickNote",
+  "version": "1.0.0",
+  "description": "Highlight text on any page and save it as a note",
+  "permissions": ["storage", "contextMenus", "activeTab"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icon48.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["content.css"]
+    }
+  ],
+  "icons": {
+    "48": "icon48.png",
+    "128": "icon128.png"
+  }
+}

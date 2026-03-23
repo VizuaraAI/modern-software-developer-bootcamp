@@ -1,0 +1,53 @@
+/* QuickNote Toast Notification Styles */
+/* These styles are injected into every page via content_scripts */
+
+.quicknote-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 2147483647; /* Maximum z-index to stay on top */
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 20px;
+  background-color: #1a1a2e;
+  color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  opacity: 0;
+  transform: translateY(16px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.quicknote-toast-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.quicknote-toast-hiding {
+  opacity: 0;
+  transform: translateY(16px);
+}
+
+.quicknote-toast-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  background-color: #4ade80;
+  color: #1a1a2e;
+  border-radius: 50%;
+  font-size: 13px;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.quicknote-toast-text {
+  white-space: nowrap;
+}
